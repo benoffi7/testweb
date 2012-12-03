@@ -11,10 +11,10 @@ class DoctorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Apellido')
-            ->add('Nombre')
-            ->add('Dni')
-            ->add('FechaNacimiento')
+            ->add('apellido')
+            ->add('nombre')
+            ->add('dni')
+            ->add('fechaNacimiento')
         ;
     }
 
