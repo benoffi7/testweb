@@ -22,41 +22,41 @@ class Turno
     private $id;
 
 	/**
-	 * @var \TestWeb\PruebasBundle\Entity\Paciente $Paciente
+	 * @var \TestWeb\PruebasBundle\Entity\Paciente $paciente
 	 *
 	 * @ORM\ManyToOne(targetEntity="\TestWeb\PruebasBundle\Entity\Paciente")
 	 * @ORM\JoinColumn(name="paciente_id", referencedColumnName="id", nullable=false)
 	 */    
-    private $Paciente;
+    private $paciente;
 
    /**
-	 * @var \TestWeb\PruebasBundle\Entity\Doctor $Doctor
+	 * @var \TestWeb\PruebasBundle\Entity\Doctor $doctor
 	 *
 	 * @ORM\ManyToOne(targetEntity="\TestWeb\PruebasBundle\Entity\Doctor")
 	 * @ORM\JoinColumn(name="doctor_id", referencedColumnName="id", nullable=false)
 	 */   
-    private $Doctor;
+    private $doctor;
 
     /**
-     * @var \DateTime $FechaTurno
+     * @var \DateTime $fechaTurno
      *
      * @ORM\Column(name="FechaTurno", type="datetime")
      */
-    private $FechaTurno;
+    private $fechaTurno;
 
     /**
-     * @var boolean $Confirmado
+     * @var boolean $confirmado
      *
      * @ORM\Column(name="Confirmado", type="boolean")
      */
-    private $Confirmado;
+    private $confirmado;
 
     /**
-     * @var boolean $Realizado
+     * @var boolean $realizado
      *
      * @ORM\Column(name="Realizado", type="boolean")
      */
-    private $Realizado;
+    private $realizado;
 
 
     /**
@@ -77,7 +77,7 @@ class Turno
 	 */
     public function setPaciente(\TestWeb\PruebasBundle\Entity\Paciente $paciente)
     {
-        $this->Paciente = $paciente;
+        $this->paciente = $paciente;
     
         return $this;
     }
@@ -89,7 +89,7 @@ class Turno
 	 */
     public function getPaciente()
     {
-        return $this->Paciente;
+        return $this->paciente;
     }
 
     /**
@@ -100,7 +100,7 @@ class Turno
 	 */
     public function setDoctor(\TestWeb\PruebasBundle\Entity\Doctor $doctor)
     {
-        $this->Doctor = $doctor;
+        $this->doctor = $doctor;
     
         return $this;
     }
@@ -112,7 +112,7 @@ class Turno
 	 */
     public function getDoctor()
     {
-        return $this->Doctor;
+        return $this->doctor;
     }
 
     /**
@@ -123,7 +123,7 @@ class Turno
      */
     public function setFechaTurno($fechaTurno)
     {
-        $this->FechaTurno = $fechaTurno;
+        $this->fechaTurno = $fechaTurno;
     
         return $this;
     }
@@ -135,7 +135,7 @@ class Turno
      */
     public function getFechaTurno()
     {
-        return $this->FechaTurno;
+        return $this->fechaTurno;
     }
 
     /**
@@ -146,7 +146,7 @@ class Turno
      */
     public function setConfirmado($confirmado)
     {
-        $this->Confirmado = $confirmado;
+        $this->confirmado = $confirmado;
     
         return $this;
     }
@@ -158,7 +158,7 @@ class Turno
      */
     public function getConfirmado()
     {
-        return $this->Confirmado;
+        return $this->confirmado;
     }
 
     /**
@@ -169,7 +169,7 @@ class Turno
      */
     public function setRealizado($realizado)
     {
-        $this->Realizado = $realizado;
+        $this->realizado = $realizado;
     
         return $this;
     }
@@ -181,6 +181,6 @@ class Turno
      */
     public function getRealizado()
     {
-        return $this->Realizado;
+        return $this->realizado;
     }
 }

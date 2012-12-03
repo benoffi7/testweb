@@ -26,28 +26,28 @@ class Paciente
      *
      * @ORM\Column(name="Apellido", type="string", length=255)
      */
-    private $Apellido;
+    private $apellido;
 
     /**
      * @var string $Nombre
      *
      * @ORM\Column(name="Nombre", type="string", length=255)
      */
-    private $Nombre;
+    private $nombre;
 
     /**
      * @var integer $Dni
      *
      * @ORM\Column(name="Dni", type="integer")
      */
-    private $Dni;
+    private $dni;
 
     /**
      * @var \Date $FechaNacimiento
      *
      * @ORM\Column(name="FechaNacimiento", type="date")
      */
-    private $FechaNacimiento;
+    private $fechaNacimiento;
 
 
     /**
@@ -68,7 +68,7 @@ class Paciente
      */
     public function setApellido($apellido)
     {
-        $this->Apellido = $apellido;
+        $this->apellido = $apellido;
     
         return $this;
     }
@@ -80,7 +80,7 @@ class Paciente
      */
     public function getApellido()
     {
-        return $this->Apellido;
+        return $this->apellido;
     }
 
     /**
@@ -91,7 +91,7 @@ class Paciente
      */
     public function setNombre($nombre)
     {
-        $this->Nombre = $nombre;
+        $this->nombre = $nombre;
     
         return $this;
     }
@@ -103,7 +103,7 @@ class Paciente
      */
     public function getNombre()
     {
-        return $this->Nombre;
+        return $this->nombre;
     }
 
     /**
@@ -114,7 +114,7 @@ class Paciente
      */
     public function setDni($dni)
     {
-        $this->Dni = $dni;
+        $this->dni = $dni;
     
         return $this;
     }
@@ -126,7 +126,7 @@ class Paciente
      */
     public function getDni()
     {
-        return $this->Dni;
+        return $this->dni;
     }
 
     /**
@@ -137,7 +137,7 @@ class Paciente
      */
     public function setFechaNacimiento($fechaNacimiento)
     {
-        $this->FechaNacimiento = $fechaNacimiento;
+        $this->fechaNacimiento = $fechaNacimiento;
     
         return $this;
     }
@@ -149,13 +149,13 @@ class Paciente
      */
     public function getFechaNacimiento()
     {
-        return $this->FechaNacimiento;
+        return $this->fechaNacimiento;
     }
     
     
     public function __toString()
     {
-    	return  $this->Apellido .' '. $this->Nombre;
+    	return  $this->apellido .' '. $this->nombre;
     }
     
     

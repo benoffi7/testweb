@@ -207,6 +207,10 @@ class PacienteController extends Controller
      */
     public function cantidadTurnosAction(Request $request, $id)
     {
-    	return new Response(12);
+    	$em = $this->getDoctrine()->getManager();
+    	$paciente = $em->getRepository('PruebasBundle:Paciente')->find($id);
+    	$turnos = $em->getRepository('PruebasBundle:Turno')->findByPaciente($paciente);
+    	$cantidad = count($turnos);
+    	return new Response($cantidad);
     }
 }

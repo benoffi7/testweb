@@ -11,11 +11,11 @@ class TurnoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('FechaTurno',null,array("label" => "Fecha del turno"))
-            ->add('Confirmado',null,array('required'=>false))
-            ->add('Realizado',null,array('required'=>false))
-            ->add('Paciente')
-            ->add('Doctor')
+            ->add('fechaTurno',null,array("label" => "Fecha del turno"))
+            ->add('confirmado',null,array('required'=>false))
+            ->add('realizado',null,array('required'=>false))
+            ->add('paciente')
+            ->add('doctor')
         ;
     }
 
