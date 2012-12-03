@@ -1,0 +1,50 @@
+<h1>Turno</h1>
+
+<table class="record_properties" border="1">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Fecha del turno</th>
+            <td>{{ entity.FechaTurno|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Confirmado</th>
+            <td>{% if entity.Confirmado==true %}
+            				Si
+            	{% else %}
+						    No	
+            	{% endif %}
+            </td>
+         <tr> 
+           <th>Realizado</th>
+            <td>{% if entity.Realizado==true %}
+            				Si
+            	{% else %}
+							No	
+            	{% endif %}
+            </td>
+        </tr>        
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('turno') }}">
+            Volver a la lista
+        </a>
+    </li>
+{#     <li>#}
+{#         <a href="{{ path('turno_edit', { 'id': entity.id }) }}">#}
+{#             Edit#}
+{#         </a>#}
+{#     </li>#}
+{#     <li>#}
+{#         <form action="{{ path('turno_delete', { 'id': entity.id }) }}" method="post">#}
+{#             {{ form_widget(delete_form) }}#}
+{#             <button type="submit">Delete</button>#}
+{#         </form>#}
+{#     </li>#}
+</ul>

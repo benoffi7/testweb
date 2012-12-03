@@ -1,0 +1,67 @@
+<h1>Lista de Turnos</h1>
+
+<table class="records_list" border="1">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Fecha del turno</th>
+            <th>Confirmado</th>
+            <th>Realizado</th>
+            <th>Medico</th>
+            <th>Paciente</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('turno_show', { 'id': entity.id }) }}">{{ entity.id }}</a>
+            </td>
+            <td>
+            	{% if entity.FechaTurno %}
+            				{{ entity.FechaTurno|date('Y-m-d H:i:s') }}
+            	{% endif %}
+            </td>
+            <td>{% if entity.Confirmado==true %}
+            				Si
+            	{% else %}
+						    No	
+            	{% endif %}
+            </td>
+            <td>{% if entity.Realizado==true %}
+            				Si
+            	{% else %}
+							No	
+            	{% endif %}
+            </td>
+            <!-- medico -->
+            <td><a href="/app_dev.php/doctor/{{ entity.doctor.id }}/show">{{ entity.doctor }}</a>     
+            </td>
+            <!-- paciente -->
+            <td><a href="/app_dev.php/paciente/{{ entity.paciente.id }}/show">{{ entity.paciente }}</a>
+            </td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('turno_show', { 'id': entity.id }) }}">Detalles</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('turno_edit', { 'id': entity.id }) }}">Editar</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('turno_delete', { 'id': entity.id }) }}">Borrar</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('turno_new') }}">
+            Crear nuevo turno
+        </a>
+    </li>
+</ul>
