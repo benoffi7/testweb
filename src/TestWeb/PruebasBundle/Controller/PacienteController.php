@@ -2,6 +2,8 @@
 
 namespace TestWeb\PruebasBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -195,5 +197,16 @@ class PacienteController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+    
+    /**
+     * 
+     *
+     * @Route("/{id}/cantidad_turnos", name="cantidad_turnos")
+     * @Method("GET")
+     */
+    public function cantidadTurnosAction(Request $request, $id)
+    {
+    	return new Response(12);
     }
 }

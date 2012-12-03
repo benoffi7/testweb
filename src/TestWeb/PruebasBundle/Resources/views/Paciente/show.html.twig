@@ -1,3 +1,26 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block javascripts %}
+<script>
+$(document).ready
+(
+		function()
+		{			
+			$('#cantidadTurnos').load('{{ path('cantidad_turnos', {id: entity.id}) }}');
+    	}
+);
+
+</script>
+{% endblock %}
+
+{% block body %}
+
 <h1>Paciente</h1>
 
 <table class="record_properties">
@@ -43,3 +66,6 @@
         </form>
     </li>
 </ul>
+<div id="cantidadTurnos" name="cantidadTurnos" >
+</div>
+{% endblock %}
