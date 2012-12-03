@@ -1,3 +1,10 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+{% block body %}
 <h1>Lista de Turnos</h1>
 
 <table class="records_list" border="1">
@@ -35,10 +42,10 @@
             	{% endif %}
             </td>
             <!-- medico -->
-            <td><a href="/app_dev.php/doctor/{{ entity.doctor.id }}/show">{{ entity.doctor }}</a>     
+            <td><a href="{{ path('doctor_show', { 'id': entity.doctor.id }) }}">{{ entity.doctor }}</a>     
             </td>
             <!-- paciente -->
-            <td><a href="/app_dev.php/paciente/{{ entity.paciente.id }}/show">{{ entity.paciente }}</a>
+            <td><a href="{{ path('paciente_show', { 'id': entity.paciente.id }) }}">{{ entity.paciente }}</a>     
             </td>
             <td>
                 <ul>
@@ -65,3 +72,4 @@
         </a>
     </li>
 </ul>
+{%  endblock body %}
