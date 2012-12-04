@@ -3,6 +3,7 @@
 namespace TestWeb\PruebasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TestWeb\PruebasBundle\Entity\Turno
@@ -23,7 +24,7 @@ class Turno
 
 	/**
 	 * @var \TestWeb\PruebasBundle\Entity\Paciente $paciente
-	 *
+	 * @Assert\NotBlank()
 	 * @ORM\ManyToOne(targetEntity="\TestWeb\PruebasBundle\Entity\Paciente")
 	 * @ORM\JoinColumn(name="paciente_id", referencedColumnName="id", nullable=false)
 	 */    
@@ -31,7 +32,7 @@ class Turno
 
    /**
 	 * @var \TestWeb\PruebasBundle\Entity\Doctor $doctor
-	 *
+	 * @Assert\NotBlank()
 	 * @ORM\ManyToOne(targetEntity="\TestWeb\PruebasBundle\Entity\Doctor")
 	 * @ORM\JoinColumn(name="doctor_id", referencedColumnName="id", nullable=false)
 	 */   
@@ -39,7 +40,8 @@ class Turno
 
     /**
      * @var \DateTime $fechaTurno
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("\DateTime")
      * @ORM\Column(name="FechaTurno", type="datetime")
      */
     private $fechaTurno;

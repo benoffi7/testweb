@@ -23,7 +23,7 @@ $(document).ready
 
 <h1>Paciente</h1>
 
-<table class="record_properties">
+<table class="record_properties" border="1">
     <tbody>
         <tr>
             <th>Id</th>
@@ -42,8 +42,12 @@ $(document).ready
             <td>{{ entity.Dni }}</td>
         </tr>
         <tr>
-            <th>Fechanacimiento</th>
-            <td>{{ entity.FechaNacimiento|date('Y-m-d H:i:s') }}</td>
+            <th>Fecha Nacimiento</th>
+            <td>{{ entity.FechaNacimiento|date('Y-m-d') }}</td>
+        </tr>
+        <tr>
+            <th>Cantidad de Turnos</th>
+            <td><span id="cantidadTurnos" name="cantidadTurnos" /></td>
         </tr>
     </tbody>
 </table>
@@ -66,6 +70,6 @@ $(document).ready
         </form>
     </li>
 </ul>
-<div id="cantidadTurnos" name="cantidadTurnos" >
-</div>
+
+
 {% endblock %}
