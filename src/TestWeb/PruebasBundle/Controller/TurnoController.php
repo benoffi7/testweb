@@ -2,6 +2,8 @@
 
 namespace TestWeb\PruebasBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -9,6 +11,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use TestWeb\PruebasBundle\Entity\Turno;
 use TestWeb\PruebasBundle\Form\TurnoType;
+use TestWeb\PruebasBundle\Form\DoctorType;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use TestWeb\PruebasBundle\Entity\Doctor;
+
 
 /**
  * Turno controller.
@@ -138,5 +144,122 @@ class TurnoController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+    
+    /**
+     * @Route("/borrarTurnos", name="borrarTurnos")
+     */
+    public function borrarTurnos()
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$entities = $em->getRepository('PruebasBundle:Turno')->findAll();
+    	foreach ($entities as $turno)
+    	{
+    		$em->remove($turno);
+    		$em->flush();
+    	}
+    	return new Response(1);
+    	
+    }
+    
+    /**
+     * Lists all Turno entities.
+     *
+     * @Route("/tabs", name="tabs")
+     * @Template()
+     */
+    public function tabsAction()
+    {
+		return array();
+    }
+    
+    /**
+     *
+     * @Route("/devolverAlgo", name="devolverAlgo")
+     */
+    public function devolverAlgo()
+    {
+    	return new Response(12);
+    }
+    
+    /**
+     *
+     * @Route("/devolverJSON", name="devolverJSON")
+     */
+    public function devolverJSON()
+    {
+     	 $em = $this->getDoctrine()->getManager();
+        $doctoresDB = $em->getRepository('PruebasBundle:Doctor')->findAll();
+
+        $doctores = array();
+        $i = 0;
+     	foreach ($doctoresDB as $doctor) 
+     	{	     		
+     		$doctores[$i] = $this->devolverDoctor($doctor);
+           	$i++;
+        }
+        return new JsonResponse($doctores);
+    }
+    
+    private function devolverDoctor(Doctor $doctor)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$id =  $doctor->getId();
+    	$doctorDB = $em->getRepository('PruebasBundle:Doctor')->find($id);
+    	if (!$doctorDB)
+    	{
+    		throw $this->createNotFoundException('Unable to find Doctor entity.');
+    	}
+    	$resul["data"]=$doctorDB->getNombre();
+       	$resul["state"]="open";
+       	$attr["id"]=$doctorDB->getId();
+       	$resul["attr"]=$attr;       	
+       	
+    	return $resul;
+    
+    }
+    
+    /**
+     * Lists all Turno entities.
+     *
+     * @Route("/arbol", name="arbol")
+     * @Template()
+     */
+    public function arbolAction()
+    {
+//     	$em = $this->getDoctrine()->getManager();
+//     	$doctoresDB = $em->getRepository('PruebasBundle:Doctor')->findAll();
+    	
+//     	$doctores = array();
+//     	$i = 0;
+//     	foreach ($doctoresDB as $doctor)
+//     	{
+//     		$doctores[$i] = $this->devolverDoctor($doctor);
+//     		$i++;
+//     	}
+//     	$serializer = $this->container->get('serializer');
+//     	$report = $serializer->serialize($result, 'json');
+//        return $this
+// 				->render('PruebasBundle:Turno:arbol.html.twig',
+// 						array('data' => $report));
+		return array();
+    }
+    
+    /**
+     * @Route("/dialog", name="dialog")
+     * @Template()
+     */
+    public function dialogAction()
+    {
+    	return array();
+    }
+    
+    /**
+     * @Route("/autocomplete", name="autocomplete")
+     * @Template()
+     */
+    public function autocompleteAction()
+    {
+    	return array();
     }
 }

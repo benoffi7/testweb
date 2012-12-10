@@ -8,7 +8,25 @@
 <script>
 $(document).ready
 (
-		
+		function()
+		{		
+			doctores = new Array();
+			$.ajax(
+					{
+				    url:"{{ path('doctoresAjax') }}",
+				    type:"POST",
+				    success:function(data)
+				    {
+				    	var sel = $("#combo_doctores");
+				    	sel.empty();
+				    	console.info(data[0].Nombre);
+				    	for (var i=0; i<data.length; i++) 
+					    {
+				    	     sel.append('<option value="' + data[i].Id + '">' + data[i].Nombre + '</option>');
+					    }				    	
+			    	}
+			});
+    	}
 );
 $('#doctores_ac').autocomplete
 ({
@@ -21,29 +39,7 @@ $('#doctores_ac').autocomplete
             response($.map(result, 
                     function(item) 
                     {
-            		console.info(item.Id);
                 		return item.Nombre;
-                		
-            		}
-    		));
-        });
-    }
-});
-$('#pacientes_ac').autocomplete
-({
-    source: 
-    function(request, response) 
-    {
-        textoIngresado=$('#pacientes_ac').val();
-        $.getJSON('{{ path('pacientesAjaxFiltro', {nombrePaciente:""}) }}/'+textoIngresado, 
-         function(result) 
-         {
-            response($.map(result, 
-                    function(item) 
-                    {
-            			console.info(item.Id);
-                		return item.Nombre;
-                		
             		}
     		));
         });
@@ -60,15 +56,15 @@ $('#pacientes_ac').autocomplete
 	{{ form_errors(form) }} 
 	
 	
-	<div >
+	<div id="campo" name="campo">
 	<span>
-    {{ form_label(form.doctor) }}  {{ form_widget(form.doctor, { 'id': 'doctores_ac' }) }}  {{ form_errors(form.doctor) }}    
+    {{ form_label(form.doctor) }}  {{ form_widget(form.doctor) }}  {{ form_errors(form.doctor) }}    
 	</span>
 	</div>	
     
 	<div id="campo" name="campo">	
 	<span>
-    {{ form_label(form.paciente) }}  {{ form_widget(form.paciente, { 'id': 'pacientes_ac' }) }}  {{ form_errors(form.paciente) }}    
+    {{ form_label(form.paciente) }}  {{ form_widget(form.paciente) }}  {{ form_errors(form.paciente) }}    
 	</span>
 	</div>
 	
@@ -104,5 +100,16 @@ $('#pacientes_ac').autocomplete
     </li>
 </ul>
 
+
+<div class="ui-widget">
+    <label for="doctores_ac">Doctores Autocomplete: </label>
+    <input id="doctores_ac" />
+</div>
+ 
+ Combo doctores Ajax
+ 
+ <select id="combo_doctores" name="combo_doctores">		
+ </select>
+ 
 
 {%  endblock body %}

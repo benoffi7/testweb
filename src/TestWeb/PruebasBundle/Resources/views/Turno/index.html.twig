@@ -3,6 +3,48 @@
 {% block title %}{% endblock %}
 
 {% block stylesheets %}
+
+{% endblock %}
+{% block javascripts %}
+<script>
+$(document).ready(function() 
+		{
+			$( "#eliminarTodos" ).click(
+			        function() 
+			        {
+			            $( "#dialog-confirm" ).dialog( "open" );
+			            return false;
+			        });
+			 $( "#dialog-confirm" ).dialog(
+				    	{
+				        resizable: true,
+				        autoOpen: false,
+				        height:140,
+				        modal: true,
+				        buttons: 
+				            {
+				            "Delete all items": 
+				            function() 
+				            {
+				    			$.ajax(
+				    					{
+				    				    url:"{{ path('borrarTurnos') }}",
+				    				    type:"POST",
+				    				    success:function(data)
+				    				    {
+				    				    	 window.location.reload();		    	
+				    			    	}
+				    			});
+				                $( this ).dialog( "close" );
+				            },
+				            Cancel: function() {
+				                $( this ).dialog( "close" );
+				            }
+				        }
+				    });	  		
+		});
+   
+</script>
 {% endblock %}
 {% block body %}
 <h1>Lista de Turnos</h1>
@@ -71,5 +113,12 @@
             Crear nuevo turno
         </a>
     </li>
+    <li>
+	   
+	 <a id="eliminarTodos" name="eliminarTodos">Eliminar todos</a>
+    </li>
 </ul>
+ <div id="dialog-confirm" title="Empty the recycle bin?">
+	    <span class="ui-icon ui-icon-alert" style="float: left; display:none; margin: 0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</span>
+</div>
 {%  endblock body %}

@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use TestWeb\PruebasBundle\Entity\Paciente;
 use TestWeb\PruebasBundle\Form\PacienteType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Paciente controller.
@@ -212,5 +213,50 @@ class PacienteController extends Controller
     	$turnos = $em->getRepository('PruebasBundle:Turno')->findByPaciente($paciente);
     	$cantidad = count($turnos);
     	return new Response($cantidad);
+    }
+    
+    /**
+     *
+     * @Route("/pacientesAjaxFiltro/{nombrePaciente}", name="pacientesAjaxFiltro")
+     *
+     */
+    public function devolverPacientesFiltro($nombrePaciente)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$repository = $em->getRepository('PruebasBundle:Paciente');
+    	 
+    	$query = $repository->createQueryBuilder('p')
+    	->where('p.nombre LIKE :nombre')
+    	->setParameter('nombre', '%'.$nombrePaciente.'%')
+    	->getQuery();
+    	 
+    	$pacientesDB = $query->getResult();
+    	$pacientes = array();
+    	$i = 0;
+    	 
+    	foreach ($pacientesDB as $paciente)
+    	{
+    		$pacientes[$i] = $this->devolverPaciente($paciente);
+    		$i++;
+    	}
+    	return new JsonResponse($pacientes);
+    }
+    
+    private function devolverPaciente(Paciente $paciente)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$id =  $paciente->getId();
+    	$pacienteDB = $em->getRepository('PruebasBundle:Paciente')->find($id);
+    	if (!$pacienteDB)
+    	{
+    		throw $this->createNotFoundException('Unable to find Paciente entity.');
+    	}
+    	$resul["Id"]=$pacienteDB->getId();
+    	$resul["Apellido"]=$pacienteDB->getApellido();
+    	$resul["Nombre"]=$pacienteDB->getNombre();
+    	$resul["Dni"]=$pacienteDB->getDni();
+    	$resul["Fecha"]=$pacienteDB->getFechaNacimiento();
+    	return $resul;
+    
     }
 }

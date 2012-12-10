@@ -3,12 +3,15 @@
 namespace TestWeb\PruebasBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use TestWeb\PruebasBundle\Entity\Doctor;
 use TestWeb\PruebasBundle\Form\DoctorType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Doctor controller.
@@ -26,16 +29,82 @@ class DoctorController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $entities = $em->getRepository('PruebasBundle:Doctor')->findAll();
-
         return array('entities' => $entities,);
     }
+    
+    /**
+     * 
+     * @Route("/doctoresAjax", name="doctoresAjax")
+     * 
+     */
+    public function devolverDoctoresAction()
+    {    	
+        $em = $this->getDoctrine()->getManager();
+        $doctoresDB = $em->getRepository('PruebasBundle:Doctor')->findAll();
+
+        $doctores = array();
+        $i = 0;
+     	foreach ($doctoresDB as $doctor) 
+     	{	     		
+     		$doctores[$i] = $this->devolverDoctor($doctor);
+           	$i++;
+        }
+        return new JsonResponse($doctores);
+    }
+    
+    /**
+     *
+     * @Route("/doctoresAjaxFiltro/{nombreDoctor}", name="doctoresAjaxFiltro")
+     *
+     */
+    public function devolverDoctoresFiltro($nombreDoctor)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$repository = $em->getRepository('PruebasBundle:Doctor');
+    	
+    	$query = $repository->createQueryBuilder('d')
+    	->where('d.nombre LIKE :nombre')
+    	->setParameter('nombre', '%'.$nombreDoctor.'%')
+    	->getQuery();
+    	
+    	$doctoresDB = $query->getResult();    
+    	$doctores = array();    	
+    	$i = 0;
+    	
+    	foreach ($doctoresDB as $doctor)
+    	{
+    		$doctores[$i] = $this->devolverDoctor($doctor);
+    		$i++;
+    	}
+    	return new JsonResponse($doctores);
+    }
+    
+    private function devolverDoctor(Doctor $doctor)
+    {
+    	$em = $this->getDoctrine()->getManager();   
+    	$id =  $doctor->getId();
+    	$doctorDB = $em->getRepository('PruebasBundle:Doctor')->find($id);
+    	if (!$doctorDB)
+    	{
+    		throw $this->createNotFoundException('Unable to find Doctor entity.');
+    	}
+    	$resul["Id"]=$doctorDB->getId();
+    	$resul["Apellido"]=$doctorDB->getApellido();
+    	$resul["Nombre"]=$doctorDB->getNombre();
+    	$resul["Dni"]=$doctorDB->getDni();
+    	$resul["Fecha"]=$doctorDB->getFechaNacimiento();
+    	return $resul;
+
+    }
+    
+    
 
     /**
      * Finds and displays a Doctor entity.
      *
      * @Route("/{id}/show", name="doctor_show")
+     * 
      * @Template()
      */
     public function showAction($id)

@@ -3,9 +3,24 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
+        
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+      
         <script src="{{ asset('bundles/pruebas/js/jquery-1.8.3.js') }}"></script>
+        <script src="{{ asset('bundles/pruebas/js/jquery-ui.js') }}"></script>
+        <script src="{{ asset('bundles/pruebas/js/jquery.bgiframe-2.1.2.js') }}"></script>
+        <script src="{{ asset('bundles/pruebas/js/jquery.jstree.js') }}"></script>
+        
+        <!--  <link rel="stylesheet" href="{{ asset('bundles/pruebas/css/plantilla.css') }}" type="text/css" media="all" />-->
+        
+        <link rel="stylesheet" href="{{ asset('bundles/pruebas/css/jquery-ui.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('bundles/pruebas/css/style.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('bundles/pruebas/css/themes/apple/style.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('bundles/pruebas/css/themes/classic/style.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('bundles/pruebas/css/themes/default/style.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('bundles/pruebas/css/themes/default-rtl/style.css') }}" type="text/css" media="all" />
+       
     </head>
     <body>
         {% block body %}{% endblock %}

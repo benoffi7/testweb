@@ -1,0 +1,65 @@
+* {
+	font-size: 14px;
+	font-family: 'Imprima', Verdada, Arial, Helvetica, sans-serif
+}
+div#titulo
+{
+	font-size: 20px;
+	color:rgb(0,0,255);
+	font-weight: bold;	
+	text-align:center;
+	
+}
+#boton
+{
+	 color:#2B42BB;  
+	 font: bold 150% 'trebuchet ms',helvetica,sans-serif;  
+	 background-color:#fed;   
+	 border: 1px solid;   
+	 border-color: #696 #363 #363 #696;   
+	 filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr='#ffffffff',EndColorStr='#ffeeddaa');
+	
+}
+div#campo
+{
+	font-size: 24px;
+	font-weight: bold;	
+	font-size: 1.4em;
+	margin-bottom: 5px;
+}
+div#div_boton
+{
+	margin-bottom: 5px;
+	width: 250px;
+	margin: 0 auto;
+}
+body
+{
+	background-color:#b0c4de;
+}
+ul 
+{
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+li 
+{
+    list-style: none outside none;
+}
+a:link,a:visited
+{
+	display:block;
+	font-weight:bold;
+	color:#FFFFFF;
+	background-color:#98bf21;
+	width:120px;
+	text-align:center;
+	padding:4px;
+	text-decoration:none;
+}
+a:hover,a:active
+{
+	background-color:#7A991A;
+}
+

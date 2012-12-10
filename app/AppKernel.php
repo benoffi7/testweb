@@ -19,7 +19,8 @@ class AppKernel extends Kernel
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-            new TestWeb\PruebasBundle\PruebasBundle(),
+            new TestWeb\TestWeb\PruebasBundle(),
+        	new Genemu\Bundle\FormBundle\GenemuFormBundle(), 
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
