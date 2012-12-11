@@ -20,16 +20,14 @@ class TurnoType extends AbstractType
             //->add('fechaTurno',null,array('required'=>false,'widget' => 'single_text','label'  => 'Fecha del Turno'))
             ->add('confirmado',null,array('required'=>false))
             ->add('realizado',null,array('required'=>false))
-            ->add('paciente','text',array('required'=>false, "mapped" => false))
-            ->add('doctor','text',array('required'=>false, "mapped" => false))
+            ->add('paciente',null,array('required'=>false))
+            ->add('doctor',null,array('required'=>false))
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'TestWeb\PruebasBundle\Entity\Turno'
-        ));
+        $resolver->setDefaults(array('data_class' => 'TestWeb\PruebasBundle\Entity\Turno'));
     }
 
     public function getName()

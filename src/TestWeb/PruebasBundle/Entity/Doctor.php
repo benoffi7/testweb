@@ -2,12 +2,18 @@
 
 namespace TestWeb\PruebasBundle\Entity;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 
 /**
  * TestWeb\PruebasBundle\Entity\Doctor
  *
  * @ORM\Table()
+ * @UniqueEntity(fields="dni", message="DNI en uso.")
  * @ORM\Entity(repositoryClass="TestWeb\PruebasBundle\Entity\DoctorRepository")
  */
 class Doctor
@@ -23,28 +29,37 @@ class Doctor
 
     /**
      * @var string $Apellido
-     *
-     * @ORM\Column(name="Apellido", type="string", length=255)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="Apellido", type="string", length=255, nullable=false)
      */
     private $apellido;
 
     /**
      * @var string $Nombre
-     *
-     * @ORM\Column(name="Nombre", type="string", length=255)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="Nombre", type="string", length=255, nullable=false)
      */
     private $nombre;
-
+    
+  /**
+	 * @var \TestWeb\PruebasBundle\Entity\Especialidad $especialidad
+	 * @Assert\NotBlank()
+	 * @ORM\ManytoOne(targetEntity="\TestWeb\PruebasBundle\Entity\Especialidad")
+	 * @ORM\JoinColumn(name="especialidad_id", referencedColumnName="id", nullable=false)
+	 */    
+    private $especialidad;
+    
     /**
      * @var integer $Dni
-     *
-     * @ORM\Column(name="Dni", type="integer")
+     * @Assert\NotBlank()
+     * @ORM\Column(name="Dni", type="integer", nullable=false, unique = true)
      */
     private $dni;
 
     /**
      * @var \Date $FechaNacimiento
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("\DateTime")
      * @ORM\Column(name="FechaNacimiento", type="date")
      */
     private $fechaNacimiento;
@@ -82,6 +97,29 @@ class Doctor
     {
         return $this->apellido;
     }
+    
+/**
+	 * Set especialidad
+	 *
+	 * @param \TestWeb\PruebasBundle\Entity\Especialidad $especialidad
+	 * @return Doctor
+	 */
+    public function setEspecialidad(\TestWeb\PruebasBundle\Entity\Especialidad $especialidad)
+    {
+        $this->especialidad = $especialidad;    
+        return $this;
+    }
+
+    /**
+	 * Get \TestWeb\PruebasBundle\Entity\Especialidad
+	 *
+	 * @return Especialidad
+	 */
+    public function getEspecialidad()
+    {
+        return $this->especialidad;
+    }
+    
 
     /**
      * Set Nombre

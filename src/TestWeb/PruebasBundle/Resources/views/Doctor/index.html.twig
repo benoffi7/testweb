@@ -1,13 +1,14 @@
 <h1>Doctor list</h1>
 
-<table class="records_list">
+<table class="records_list" border="1">
     <thead>
         <tr>
             <th>Id</th>
             <th>Apellido</th>
             <th>Nombre</th>
             <th>Dni</th>
-            <th>Fechanacimiento</th>
+            <th>Especialidad</th>
+            <th>Fecha Nacimiento</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -18,6 +19,8 @@
             <td>{{ entity.Apellido }}</td>
             <td>{{ entity.Nombre }}</td>
             <td>{{ entity.Dni }}</td>
+            <td>{{ entity.Especialidad }}</td>
+        
             <td>{% if entity.FechaNacimiento %}{{ entity.FechaNacimiento|date('Y-m-d H:i:s') }}{% endif %}</td>
             <td>
                 <ul>
@@ -37,7 +40,7 @@
 <ul>
     <li>
         <a href="{{ path('doctor_new') }}">
-            Create a new entry
+            Crear nuevo doctor
         </a>
     </li>
 </ul>

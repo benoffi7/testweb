@@ -1,10 +1,83 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+{% block javascripts %}
+<script>
+$(function() 
+{
+    $( document ).tooltip();
+});
+$('#especialidades_ac').autocomplete
+({
+    source: 
+    function(request, response) 
+    {
+        textoIngresado=$('#especialidades_ac').val();
+        $.getJSON('{{ path('showEspecialidades', {nombreEspecialidad:""}) }}/'+textoIngresado, 
+         function(result) 
+         {
+            response($.map(result, 
+                    function(item) 
+                    {
+            			console.info(item.Id);
+                		return item.Descripcion;                		
+            		}
+    		));
+        });
+    }
+});
+</script>
+{% endblock %}
+{% block body %}
+
 <h1>Doctor creation</h1>
 
 <form action="{{ path('doctor_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
+   {# errors y rest van siempre #}
+   	
+   	<div class="error">
+   			{{ form_errors(form) }}
+   	</div> 
+	
+	<table>
+	<tr>
+		<th>{{ form_label(form.apellido) }}</th>
+		<td>{{ form_widget(form.apellido) }} </td>
+		
+		<td class="error">{{ form_errors(form.apellido) }}</td>
+		
+	</tr>
+	<tr>
+		<th>{{ form_label(form.nombre) }}</th>
+		<td>{{ form_widget(form.nombre) }}</td>
+		<td>{{ form_errors(form.nombre) }}</td>
+	</tr>
+	<tr>
+		<th>{{ form_label(form.dni) }}</th>
+		<td>{{ form_widget(form.dni) }}</td>
+		
+		<td class="error">{{ form_errors(form.dni) }}</td>
+		
+	</tr>
+	<tr>
+		<th>{{ form_label(form.fechaNacimiento) }}</th>
+		<td>{{ form_widget(form.fechaNacimiento) }}</td>
+		<td>{{ form_errors(form.fechaNacimiento) }}</td>
+	</tr>
+	<tr>
+		<th>{{ form_label(form.especialidad) }}</th>
+		<td>{{ form_widget(form.especialidad, { 'id': 'especialidades_ac' }) }}</td>
+		<td>{{ form_errors(form.fechaNacimiento) }}</td>
+	</tr>
+	</table>
+	
+	{{ form_rest(form) }}
+	
+	<button title="Boton" type="submit">Crear doctor!</button>
+   
 </form>
 
 <ul class="record_actions">
@@ -14,3 +87,4 @@
         </a>
     </li>
 </ul>
+{% endblock %}

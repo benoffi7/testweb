@@ -2,6 +2,10 @@
 
 namespace TestWeb\PruebasBundle\Controller;
 
+use Symfony\Component\Form\FormError;
+
+use TestWeb\PruebasBundle\Entity\Especialidad;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -98,8 +102,6 @@ class DoctorController extends Controller
 
     }
     
-    
-
     /**
      * Finds and displays a Doctor entity.
      *
@@ -110,7 +112,6 @@ class DoctorController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('PruebasBundle:Doctor')->find($id);
 
         if (!$entity) 
@@ -120,7 +121,8 @@ class DoctorController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return array
+        (
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         );
@@ -135,12 +137,12 @@ class DoctorController extends Controller
     public function newAction()
     {
         $entity = new Doctor();
-        $form   = $this->createForm(new DoctorType(), $entity);
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(new DoctorType(), $entity, array(
+        		'em' => $this->getDoctrine()->getEntityManager(),
+        ));
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        return array('entity' => $entity,'form'=> $form->createView());
     }
 
     /**
@@ -153,21 +155,46 @@ class DoctorController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Doctor();
-        $form = $this->createForm(new DoctorType(), $entity);
+        $form = $this->createForm(new DoctorType(), $entity, array(
+        		'em' => $this->getDoctrine()->getEntityManager(),
+        ));
         $form->bind($request);
-
-        if ($form->isValid()) {
+		$error = '';
+		
+		
+        if ($form->isValid()) 
+        {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('doctor_show', array('id' => $entity->getId())));
+            $doctorBD = $em->getRepository('PruebasBundle:Doctor')->findByDni($entity->getDni());
+            if ($doctorBD)
+            {
+            	$error = new FormError('Error en el DNI'); 
+            	$form->get('dni')->addError($error);
+            	           	            	
+            }
+            $doctorBD = $em->getRepository('PruebasBundle:Doctor')->findOneBy(array('nombre'=>$entity->getNombre(),'apellido'=>$entity->getApellido()));
+           	if ($doctorBD)
+            {
+            		$error = new FormError('Error en el Nombre y Apelido'); 
+            		$form->get('apellido')->addError($error);
+            }           
+            if ($error=='')
+            {            	
+            		$em->persist($entity);
+            		$em->flush();            		 
+            		
+            		return $this->redirect($this->generateUrl('doctor_show', array('id' => $entity->getId())));
+            }
+            else 
+            {
+            	return array('entity' => $entity,'form' => $form->createView());
+            }                         	 
         }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        else
+        {
+          	return array('entity' => $entity,'form' => $form->createView());
+        }
+   
     }
 
     /**
@@ -182,11 +209,14 @@ class DoctorController extends Controller
 
         $entity = $em->getRepository('PruebasBundle:Doctor')->find($id);
 
-        if (!$entity) {
+        if (!$entity) 
+        {
             throw $this->createNotFoundException('Unable to find Doctor entity.');
         }
 
-        $editForm = $this->createForm(new DoctorType(), $entity);
+        $editForm = $this->createForm(new DoctorType(), $entity, array(
+        		'em' => $this->getDoctrine()->getEntityManager(),
+        ));
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -209,12 +239,16 @@ class DoctorController extends Controller
 
         $entity = $em->getRepository('PruebasBundle:Doctor')->find($id);
 
-        if (!$entity) {
+        if (!$entity)
+        {
             throw $this->createNotFoundException('Unable to find Doctor entity.');
         }
+        
+        $editForm = $this->createForm(new DoctorType(), $entity, array(
+        		'em' => $this->getDoctrine()->getEntityManager(),
+        ));
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new DoctorType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
