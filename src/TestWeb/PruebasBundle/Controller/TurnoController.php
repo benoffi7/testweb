@@ -198,7 +198,11 @@ class TurnoController extends Controller
      		$doctores[$i] = $this->devolverDoctor($doctor);
            	$i++;
         }
-        return new JsonResponse($doctores);
+        
+        $serializer = $this->container->get('serializer');
+        $report = $serializer->serialize($doctores, 'json');
+        
+        return new Response($report);
     }
     
     private function devolverDoctor(Doctor $doctor)
@@ -227,21 +231,23 @@ class TurnoController extends Controller
      */
     public function arbolAction()
     {
-//     	$em = $this->getDoctrine()->getManager();
-//     	$doctoresDB = $em->getRepository('PruebasBundle:Doctor')->findAll();
-    	
-//     	$doctores = array();
-//     	$i = 0;
-//     	foreach ($doctoresDB as $doctor)
-//     	{
-//     		$doctores[$i] = $this->devolverDoctor($doctor);
-//     		$i++;
-//     	}
-//     	$serializer = $this->container->get('serializer');
-//     	$report = $serializer->serialize($result, 'json');
-//        return $this
-// 				->render('PruebasBundle:Turno:arbol.html.twig',
-// 						array('data' => $report));
+ 		$em = $this->getDoctrine()->getManager();
+        $doctoresDB = $em->getRepository('PruebasBundle:Doctor')->findAll();
+
+        $doctores = array();
+        $i = 0;
+     	foreach ($doctoresDB as $doctor) 
+     	{	     		
+     		$doctores[$i] = $this->devolverDoctor($doctor);
+           	$i++;
+        }
+        
+        $serializer = $this->container->get('serializer');
+        $report = $serializer->serialize($doctores, 'json');
+        
+        return $this
+        ->render('PruebasBundle:Turno:arbol.html.twig',
+        		array('data' => $report));
 		return array();
     }
     

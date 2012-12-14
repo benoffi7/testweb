@@ -10,25 +10,12 @@
 <script type="text/javascript">
  $(document).ready(
 		 function()
-		 {			
-            $("#selector").jstree(
-                    {
-                    	"plugins" : [ "html_data", "types", "themes","checkbox" ],
-                    	"core" :  {"animation":0}
-            });
-            
+		 {		                    
             $("#json_jstree").jstree(
                 { 
         		"json_data" : 
             	 {
-        				"ajax" : 
-            			{
-        					"url" : "{{ path('devolverJSON') }}",
-        					"data" : function (n) 
-        						{ 
-        							return { id : n.attr ? n.attr("id") : 0 }; 
-        						}
-        				}
+        			"data" : {{ data | raw }}        			
         		},
         		"plugins" : [ "ui","themes", "json_data" ]
         	})
@@ -43,36 +30,7 @@
     
 {% endblock %}
 {% block body %}
-
-    <div id="selector">
-        <ul>
-            <li rel="team"><a>Team A's Projects</a>
-                <ul>
-                    <li ><a id="iteration1" >Iteration 1</a>
-                        <ul>
-                            <li><a>Story A</a></li>
-                            <li><a>Story B</a></li>
-                            <li><a>Story C</a></li>
-                        </ul>
-                    </li>
-                    <li rel="iteration"><a>Iteration 2</a>
-                        <ul>
-                            <li><a>Story D</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-    
-    
-    <div id="json_jstree">
+<div id="json_jstree">
         
-    </div>
-    
-    
-    
-     <div id="json_jstree_dos">
-        
-    </div>
+</div>
 {% endblock body %}
